@@ -1,35 +1,21 @@
 import pygame
 import sys
+from ChessBoard import Board
 from settings import Settings
 
 class Chess:
     def __init__(self):
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((self.settings.screenWidth, self.settings.screenHeight))
+        self.board = Board()
+        self.screen = self.settings.screen
         pygame.display.set_caption("Chess")
 
 
     def UpdateScreen(self):
-            figures = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
-            for row in range(8):
-                    for col in range(8):
-                        if (row + col) % 2 == 0:
-                            color = self.settings.whiteSquare
-                        else:
-                            color = self.settings.blackSquare
-                        
-                        if row == 0:
-                            for figure in figures:
-                                image = pygame.image.load(f'figures/white/{figure}.png').convert_alpha()
-                                new_image = pygame.transform.scale(image, (48, 48))
-                                rect = image.get_rect()
-                                self.screen.blit(image, (0, 0)) # допиши этот код 
-                                    
-                            
-                        
-                        pygame.draw.rect(self.screen, color, [col*64, row*64, 64, 64])
-
-            pygame.display.flip()
+            self.board._drawBoard()
+            self.board._drawChessPieces()
+            pygame.display.update()
+            
 
     def RunGame(self):
         while True:
@@ -40,6 +26,7 @@ class Chess:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     x_mouse, y_mouse = pygame.mouse.get_pos()
                     print(f'x = {x_mouse}, y = {y_mouse}')
+
             self.UpdateScreen()
 
     
