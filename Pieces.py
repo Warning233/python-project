@@ -1,7 +1,6 @@
-import sys
 from settings import Settings
 
 
-class Logic():
+class Pawn:
     def __init__(self):
-        
+       
