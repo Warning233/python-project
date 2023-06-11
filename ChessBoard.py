@@ -1,4 +1,5 @@
 import pygame
+from Pieces import Piece
 from settings import Settings
 
 pygame.font.init()
@@ -9,23 +10,24 @@ class Board():
         board_width = 8 * 64  
         board_height = 8 * 64  
         self.label_offset = 48
+        self.piece = Piece()
         self.settings = Settings()
         self.horizontal_off = (self.settings.screenWidth - board_width) // 2
         self.vertical_off = (self.settings.screenHeight - board_height) // 2
         self.chess_pieces = {
-             'wRook': self._load_image('pieces/white/rook.png'),
-             'wBishop': self._load_image('pieces/white/bishop.png'),
-             'wKnight': self._load_image('pieces/white/knight.png'),
-             'wQueen': self._load_image('pieces/white/queen.png'),
-             'wKing': self._load_image('pieces/white/king.png'),
-             'wPawn': self._load_image('pieces/white/pawn.png'),
+             'wRook': self.piece.create('Rook', 'white'),
+             'wBishop': self.piece.create('Bishop', 'white'),
+             'wKnight': self.piece.create('Knight', 'white'),
+             'wQueen': self.piece.create('Queen','white'),
+             'wKing': self.piece.create('King', 'white'),
+             'wPawn': self.piece.create('Pawn', 'white'),
              ####################################################
-             'bRook': self._load_image('pieces/black/rook.png'),
-             'bBishop': self._load_image('pieces/black/bishop.png'),
-             'bKnight': self._load_image('pieces/black/knight.png'),
-             'bQueen': self._load_image('pieces/black/queen.png'),
-             'bKing': self._load_image('pieces/black/king.png'),
-             'bPawn': self._load_image('pieces/black/pawn.png')             
+             'bRook': self.piece.create('Rook', 'black'),
+             'bBishop': self.piece.create('Bishop', 'black'),
+             'bKnight': self.piece.create('Knight', 'black'),
+             'bQueen': self.piece.create('Queen', 'black'),
+             'bKing': self.piece.create('King', 'black'),
+             'bPawn': self.piece.create('Pawn', 'black')             
         }      
 
     def _drawBoard(self):
@@ -42,6 +44,7 @@ class Board():
                     # Отрисовка клетки
                     pygame.draw.rect(self.settings.screen, color, [x, y, 64, 64])
 
+                    # Отрисовка букв, цифр около доски
                     if col == 0:
                         field_name = str(8 - row)  # Отображение цифр слева
                         font = pygame.font.Font(None, 24)
@@ -116,16 +119,5 @@ class Board():
 
               piece_image = self.chess_pieces[piece]
               self.settings.screen.blit(piece_image, (x, y))
-
-
-    def _load_image(self, image_path, width=64, height=64):
-        try:
-              image = pygame.image.load(image_path)
-              image = pygame.transform.smoothscale(image, (width, height))
-
-        except pygame.error as e:
-             print(f"Error! {image_path}: {e}")
-             return None
-        return image
 
          

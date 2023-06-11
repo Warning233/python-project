@@ -2,6 +2,7 @@ import pygame
 import sys
 from ChessBoard import Board
 from settings import Settings
+from Pieces import Pawn
 
 class Chess:
     def __init__(self):
@@ -25,7 +26,6 @@ class Chess:
                     sys.exit(0)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     x_mouse, y_mouse = pygame.mouse.get_pos()
-                    print(f'x = {x_mouse}, y = {y_mouse}')
 
             self.UpdateScreen()
 
